@@ -138,7 +138,28 @@ document.querySelectorAll('.navbar a').forEach(link => {
 
 let menuIcon = document.querySelector("#menu-icon");
 let navbar = document.querySelector(".navbar");
+let navLinks = document.querySelectorAll(".navbar a");
 
+// فتح/قفل المنيو بالآيقونة
 menuIcon.onclick = () => {
   navbar.classList.toggle("active");
 };
+
+// قفل المنيو لما تدوس على أي لينك
+navLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    navbar.classList.remove("active");
+  });
+});
+
+let logo = document.querySelector(".logo_header");
+
+logo.addEventListener("click", () => {
+  document.querySelector("#home").scrollIntoView({
+    behavior: "smooth"  // يعمل سكرول ناعم
+  });
+});
+
+
+
+

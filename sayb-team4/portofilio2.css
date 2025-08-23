@@ -22,6 +22,8 @@
 html {
     font-size: 62.5%;
     overflow-x: hidden;
+    scroll-behavior: smooth;
+
 }
 
 body {
@@ -35,6 +37,7 @@ body {
 section {
     min-height: 100vh;
     padding: 10rem 9% 2rem;
+      scroll-margin-top: 80px; 
 }
 
 .header {
@@ -702,7 +705,7 @@ font-size: 2.6rem;
 
 @media (max-width: 480px) {
     .skills .heading {
-        font-size: 2rem;
+        font-size: 4rem;
     }
 
     .skills-container {
@@ -715,7 +718,7 @@ font-size: 2.6rem;
     }
 
     .skill-item p {
-        font-size: 1.1rem;
+        font-size: 1.7rem;
     }
 }
 
@@ -780,6 +783,58 @@ font-size: 2.6rem;
     width: 100% !important;   
     height: auto;
     max-width: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-content img {
+    width: 400px;
+    margin-left: 20px;
+  }
+
+  .home-content h3 {
+    font-size: 4rem;  
+    margin-bottom: 10px;
+  }
+
+.home-content p {
+  font-size: 1.5rem;    
+  line-height: 1.5;       
+  max-width: 100%;        
+  word-wrap: break-word;  
+  overflow-wrap: break-word; 
+  white-space: normal;    
+  box-sizing: border-box; 
+  padding: 0 10px;       
+}
+
+
+  .home-content .tagline {
+    font-size: 2rem;   
+  }
+
+  .home-img {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    width: 100%;        
+    max-width: 90%;     
+    margin: 0 auto;     
+  }
+
+  .about-content p {
+    font-size: 1.5rem;   
+    line-height: 1.6;     
+    word-break: normal;   
+    white-space: normal;  
+    overflow-wrap: break-word;
+  }
+
+  .about-img {
+    display: none;
   }
 }
 
@@ -860,4 +915,15 @@ font-size: 2.6rem;
     color: #ffcc00;
     cursor: pointer;
     transition: 0.3s;
+}
+
+.logo-link {
+  text-decoration: none;  
+  background: none; 
+}
+
+.logo-link:focus,
+.logo-link:active {
+  outline: none;          
+  background: none;       
 }
