@@ -105,7 +105,7 @@ setInterval(() => {
         "Web Developers",
         "Graphic Designers",
         "Mobile App Creators",
-        "Innovators",
+        "Innovators Team",
         "Problem Solvers"
     ];
 
