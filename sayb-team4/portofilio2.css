@@ -27,7 +27,7 @@ html {
 }
 
 body {
-    background: #e2e20c;
+    background: #f5f5e1;
     color: #fff ;
     overflow-x: hidden;
 
@@ -301,6 +301,8 @@ font-size: 2.6rem;
 
 .portfolio-container .portfolio-box {
     position: relative;
+    width: 380px;   /* العرض */
+    height: 370px;  /* الطول */
     border-radius: 2rem;
     box-shadow: 0 0 1rem var(--bg-color);
     overflow: hidden;
@@ -310,6 +312,8 @@ font-size: 2.6rem;
 
 .portfolio-box img {
     width: 100%;
+    height: 100%;              /* يملأ البوكس */
+    object-fit: cover;   
     filter: brightness(0.6);
     transition: 0.5s ease;
 }
@@ -352,16 +356,27 @@ font-size: 2.6rem;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 5rem;
-    height: 5rem;
+    gap: 6px; /* مسافة بين النص والأيقونة */
+    padding: 12px 20px;
     background: var(--text-color);
-    border-radius: 50%;
+    border-radius: 30px; /* بدل 50% عشان يدي شكل زرار بيضاوي */
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--second-bg-color);
+    transition: all 0.3s ease;
 }
 
 .portfolio-layer a i {
-    font-size: 2rem;
+    font-size: 1.9rem;
     color: var(--second-bg-color);
 }
+
+.portfolio-layer a:hover {
+    background: var(--main-color); /* ممكن تغيره حسب ألوانك */
+    transform: translateY(-3px);
+}
+
 
 .Skills {
     background: #00B8F1;
@@ -683,6 +698,20 @@ font-size: 2.6rem;
         margin-bottom: 50px;
         text-align: center;
     }
+}
+
+@media (max-width: 768px) {
+.portfolio-container .portfolio-box {
+    position: relative;
+    width: 265px;   /* العرض */
+    height: 260px;  /* الطول */
+    border-radius: 2rem;
+    align-items: center;
+    box-shadow: 0 0 1rem var(--bg-color);
+    overflow: hidden;
+    display: flex;
+
+}
 }
 
 
