@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="main_sayb_cloned_blue.webp">
+  <title>Project View | Sayb</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      border-bottom-left-radius: 2rem;
+      border-bottom-right-radius: 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    .description {
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    /* ====== Gallery ====== */
+    .gallery {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery img {
+      max-width: 90%;
+      max-height: 500px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      position: absolute;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      object-fit: contain;
+      margin: auto;
+    }
+
+    .gallery img.active {
+      opacity: 1;
+      transform: translateX(0);
+      position: relative;
+    }
+
+    .gallery img.exit-left {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    .gallery button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      z-index: 10;
+    }
+
+    .gallery button.prev { left: 10px; }
+    .gallery button.next { right: 10px; }
+
+    /* ====== Project Details ====== */
+    .details {
+      margin-top: 2rem;
+    }
+
+    .details h2 {
+      margin-bottom: 1rem;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .detail-card {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .detail-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .detail-card h3 {
+      margin-top: 0;
+      color: #2a5298;
+      font-size: 1.2rem;
+    }
+
+    .buttons {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .buttons a {
+      display: inline-block;
+      margin: 0 1rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .buttons a.live {
+      background: #2a5298;
+      color: white;
+    }
+
+    .buttons a.back {
+      background: #eee;
+      color: #333;
+    }
+
+    .buttons a:hover {
+      opacity: 0.9;
+    }
+
+    .team-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-right: 1rem;
+      object-fit: cover;
+      border: 2px solid #eee;
+    }
+
+    .info h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #222;
+    }
+
+    .info p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #666;
+    }
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .tech-list span {
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: white;
+      padding: 0.4rem 0.2rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .tech-list span:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    /* ====== Lightbox ====== */
+    #lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    #lightbox.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      transform: scale(0.9);
+      transition: transform 0.4s ease;
+    }
+
+    #lightbox.show img {
+      transform: scale(1);
+    }
+
+    #close-lightbox {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 3rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    .header-back {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: rgba(17, 7, 7, 0.596);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.header-back:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Step-Up App</h1>
+    <p>Designed & Developed by Sayb Team</p>
+      <a href="index.html" class="header-back">⬅ Back</a>
+
+  </header>
+
+  <div class="container">
+    <section class="description">
+      <h2>Project Overview :</h2>
+      <p>
+        This app helps you set daily goals and track your progress. 
+        When you complete a goal, it celebrates your achievement and motivates you to take on the next one, 
+        turning productivity into a fun and rewarding experience.
+      </p>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery">
+      <button class="prev">&#10094;</button>
+      <img src="addgoal photo.webp" class="active" alt="Project Screenshot 1">
+      <img src="completetask photo.webp" alt="Project Screenshot 2">
+      <img src="completed-incompletd photo.webp" alt="Project Screenshot 3">
+      <button class="next">&#10095;</button>
+    </section>
+
+    <!-- Project Details -->
+    <section class="details">
+      <h2>Our Technologies :</h2> 
+      <hr>
+      <div class="details-grid">
+        <div class="detail-card">
+          <h3>📅 Completed</h3>
+          <p>August 2025</p>
+        </div>
+
+        <div class="detail-card">
+          <h3>💻 Technologies</h3>
+          <div class="tech-list">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <h3>👨‍💻 Team</h3>
+          <p>Designers & Developers from Sayb</p>
+        </div>
+
+        <div class="detail-card">
+          <h3>📱 Features</h3>
+          <p>Set goals, track progress, and stay motivated daily.</p>
+        </div>
+      </div>
+    </section>
+
+    <h2>Project Contributors :</h2> <hr>
+    <div class="team-section">
+      <div class="detail-card">
+        <img src="sorty2.webp" alt="Member 1" class="avatar">
+        <div class="info">
+          <h3>👨‍💻 Omar</h3>
+          <p>Frontend Developer</p>
+        </div>
+      </div>
+      <div class="detail-card">
+        <img src="WhatsApp Image 2025-08-08 at 08.20.00.webp" alt="Member 2" class="avatar">
+        <div class="info">
+          <h3>🎨 Omar Eldeeb</h3>
+          <p>UI/UX Designer</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <a href="https://expo.dev/accounts/omar_awad/projects/CouponApp-test/builds/cbcd828e-2c3e-4095-b029-d9b0904c73b4" target="_blank" class="live">🔗 Install App</a>
+      <a href="index.html" class="back">⬅ Back to Sayb-Team</a>
+    </div>
+  </div>
+
+  <!-- Lightbox Overlay -->
+  <div id="lightbox">
+    <span id="close-lightbox">&times;</span>
+    <img id="lightbox-img" src="" alt="Enlarged Image">
+  </div>
+
+  <script>
+    const images = document.querySelectorAll(".gallery img");
+    const prevBtn = document.querySelector(".gallery .prev");
+    const nextBtn = document.querySelector(".gallery .next");
+    let current = 0;
+    let autoSlide;
+
+    function showImage(index, direction = 1) {
+      images.forEach((img, i) => {
+        img.classList.remove("active", "exit-left");
+        if (i === index) {
+          img.classList.add("active");
+        } else if (i === current && direction === 1) {
+          img.classList.add("exit-left");
+        }
+      });
+      current = index;
+    }
+
+    function nextImage() {
+      let newIndex = (current + 1) % images.length;
+      showImage(newIndex, 1);
+    }
+
+    function prevImage() {
+      let newIndex = (current - 1 + images.length) % images.length;
+      showImage(newIndex, -1);
+    }
+
+    nextBtn.addEventListener("click", () => { nextImage(); resetAutoSlide(); });
+    prevBtn.addEventListener("click", () => { prevImage(); resetAutoSlide(); });
+
+    function startAutoSlide() { autoSlide = setInterval(nextImage, 3000); }
+    function resetAutoSlide() { clearInterval(autoSlide); startAutoSlide(); }
+    startAutoSlide();
+
+    // ===== Lightbox =====
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const closeBtn = document.getElementById("close-lightbox");
+
+    images.forEach(img => {
+      // Preload الصور لتقليل lag
+      const preloaded = new Image();
+      preloaded.src = img.src;
+
+      img.addEventListener("click", () => {
+        lightboxImg.src = img.src;
+        lightbox.classList.add("show");
+      });
+    });
+
+    closeBtn.addEventListener("click", () => lightbox.classList.remove("show"));
+    lightbox.addEventListener("click", (e) => { if(e.target === lightbox) lightbox.classList.remove("show"); });
+  </script>
+</body>
+</html>
